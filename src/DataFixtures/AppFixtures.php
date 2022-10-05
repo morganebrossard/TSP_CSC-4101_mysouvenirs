@@ -78,14 +78,14 @@ class AppFixtures extends Fixture
 
         foreach (self::souvenirsDataGenerator() as [$album, $title, $date])
         {
-            $album = $albumRepo->findOneBy(['name' => $name]);
+            $alb = $albumRepo->findOneBy(['name' => $album]);
             $souv = new Souvenir();
-            $souv->setAlbum($album);
+            $souv->setAlbum($alb);
             $souv->setTitle($title);
             $souv->setDate($date);
-            $album->addSouvenir($souv);
+            $alb->addSouvenir($souv);
             // there's a cascade persist on album-souvenirs which avoids persisting down the relation
-            $manager->persist($album);
+            $manager->persist($alb);
         }
         $manager->flush();
     }
