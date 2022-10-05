@@ -6,22 +6,34 @@ use App\Entity\Souvenir;
 use App\Repository\SouvenirRepository;
 use App\Entity\Album;
 use App\Repository\AlbumRepository;
+use App\Entity\Member;
+use App\Repository\MemberRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 
 class AppFixtures extends Fixture
 {
+    /**
+     * Generates initialization data for members : [name]
+     * @return \\Generator
+     */
+    private static function membersDataGenerator()
+    {
+        yield ["Morgane"];
+        yield ["Louise"];
+        yield ["Arthur"];
+    }
 
     /**
-     * Generates initialization data for albums : [name]
+     * Generates initialization data for albums : [name,member]
      * @return \\Generator
      */
     private static function albumsDataGenerator()
     {
-        yield ["Souvenirs de Morgane"];
-        yield ["Souvenirs de Louise"];
-        yield ["Souvenirs de Arthur"];
+        yield ["Souvenirs de Morgane","Morgane"];
+        yield ["Souvenirs de Louise","Louise"];
+        yield ["Souvenirs de Arthur","Arthur"];
     }
 
     /**
@@ -42,10 +54,24 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $albumRepo = $manager->getRepository(Album::class);
+        $memberRepo = $manager->getRepository(Member::class);
 
-        foreach (self::albumsDataGenerator() as [$name] ) {
+
+        foreach (self::membersDataGenerator() as [$name] ) {
+
+            $member = new Member();
+            $member->setName($name);
+            $manager->persist($member);          
+        }
+        $manager->flush();
+
+
+        foreach (self::albumsDataGenerator() as [$name,$member] ) {
+
+            $membre = $memberRepo->findOneBy(['name' => $member]);
             $album = new Album();
             $album->setName($name);
+            $album->setMember($membre);
             $manager->persist($album);          
         }
         $manager->flush();

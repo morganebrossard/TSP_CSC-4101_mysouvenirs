@@ -29,6 +29,12 @@ class Album
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="album")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $member;
+
     public function __construct()
     {
         $this->souvenir = new ArrayCollection();
@@ -77,6 +83,18 @@ class Album
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getMember(): ?Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Member $member): self
+    {
+        $this->member = $member;
 
         return $this;
     }
