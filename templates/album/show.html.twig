@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Albums{% endblock %}
+
+  {% block body %}
+      <h1>Album</h1>
+
+         {% dump album %}
+
+      <table class="table">
+          <tbody>
+              <tr>
+                  <th>Id</th>
+                  <td>{{ album.id }}</td>
+              </tr>
+              <tr>
+                  <th>Album</th>
+                  <td>{{ album.name }}</td>
+              </tr>           
+
+
+          </tbody>
+      </table>
+
+      <a href="{{ path('albums_list') }}">back to list</a>
+
+  {% endblock %}
