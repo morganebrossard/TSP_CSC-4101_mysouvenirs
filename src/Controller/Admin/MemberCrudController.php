@@ -2,31 +2,32 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Souvenir;
+use App\Entity\Member;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 
-class SouvenirCrudController extends AbstractCrudController
+
+class MemberCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Souvenir::class;
+        return Member::class;
     }
-
 
     public function configureFields(string $pageName): iterable
     {
         return [
             // Id shouldn't be modified
             IdField::new('id')->hideOnForm(),
-            TextField::new('title'),
-                //->setTemplatePath('admin/fields/todo_index_title.html.twig'), TODO
-            DateField::new('Date'),
+            TextField::new('name'),
+            AssociationField::new('album'),
         ];
     }
 }
+

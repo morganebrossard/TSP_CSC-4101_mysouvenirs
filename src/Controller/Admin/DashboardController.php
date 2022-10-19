@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use App\Entity\Album;
 use App\Entity\Souvenir;
+use App\Entity\Member;
 
 
 class DashboardController extends AbstractDashboardController
@@ -41,5 +42,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Les albums', 'fas fa-list', Album::class);
         yield MenuItem::linkToCrud('Les souvenirs', 'fas fa-list', Souvenir::class);
+        yield MenuItem::linkToCrud('Les membres', 'fas fa-list', Member::class);
     }
 }
