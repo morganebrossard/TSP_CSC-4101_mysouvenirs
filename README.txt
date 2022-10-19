@@ -1,5 +1,7 @@
 Projet CSC4101 - App Web d'échanges de souvenirs
 
+Etapes suivies : 
+
 - Apprentissage de git/github
 - Initialisation d'un repo github pour le projet
 - Choix de structure : Souvenirs, Albums, (Members)
