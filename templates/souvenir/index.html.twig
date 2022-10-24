@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block body %}
+<h1>Liste des souvenirs</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Album</th>
+            <th> &nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+
+         {% for souvenir in souvenirs %}
+
+            <tr>
+                <td>{{souvenir.id}}</td>
+                <td>{{souvenir.title}}</td> 
+                <td>{{ souvenir.date ? souvenir.date|date('Y-m-d H:i:s') : '' }}</td>  
+                <td>{{souvenir.album}}</td>  
+                <td><a href="{{ path('souvenir_show', {'id': souvenir.id}) }}">show</a></td>
+
+            </tr>  
+         {% endfor %} {# souvenirs #}
+    </tbody>
+</table>
+{% endblock %} {# body #}
