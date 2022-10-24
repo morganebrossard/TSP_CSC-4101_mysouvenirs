@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Souvenir;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -27,6 +28,15 @@ class SouvenirCrudController extends AbstractCrudController
             TextField::new('title'),
                 //->setTemplatePath('admin/fields/todo_index_title.html.twig'), TODO
             DateField::new('Date'),
+            TextField::new('album'),
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+
+    return $actions
+        ->add(Crud::PAGE_INDEX, Action::DETAIL)
+    ;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Member;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -20,14 +21,26 @@ class MemberCrudController extends AbstractCrudController
         return Member::class;
     }
 
+
     public function configureFields(string $pageName): iterable
     {
         return [
             // Id shouldn't be modified
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
-            AssociationField::new('album'),
+            AssociationField::new('album')
+            ->onlyOnDetail()
+            ->setTemplatePath('admin/fields/Member_Album.html.twig')
         ];
+    }
+
+
+    public function configureActions(Actions $actions): Actions
+    {
+
+    return $actions
+        ->add(Crud::PAGE_INDEX, Action::DETAIL)
+    ;
     }
 }
 

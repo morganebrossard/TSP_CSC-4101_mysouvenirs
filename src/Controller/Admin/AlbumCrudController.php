@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Album;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -25,7 +26,17 @@ class AlbumCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             TextField::new('member'),
-            AssociationField::new('souvenir'),
+            AssociationField::new('souvenir')
+            ->onlyOnDetail()
+            ->setTemplatePath('admin/fields/Album_Souvenir.html.twig')
         ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+
+    return $actions
+        ->add(Crud::PAGE_INDEX, Action::DETAIL)
+    ;
     }
 }

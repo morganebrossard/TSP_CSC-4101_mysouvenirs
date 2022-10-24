@@ -1,0 +1,19 @@
+{# source: https://stackoverflow.com/a/65082524/1814910 #}
+  <ul>
+{% for Album in field.value %}
+  {%- set url = ea_url()
+    .setController('App\\Controller\\Admin\\AlbumCrudController')
+    .setAction('detail')
+    .setEntityId(Album.id)
+  -%}
+  <li>
+  	<a href="{{ url }}">
+        {{ Album }}
+  	</a>
+  </li>
+{% else %}
+</ul>  
+  <span class="badge badge-secondary">None</span>
+  <ul>
+{% endfor %}
+  </ul>
