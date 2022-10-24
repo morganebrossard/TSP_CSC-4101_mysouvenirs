@@ -17,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class AlbumController extends AbstractController
 {
     /**
-     * @Route("/", name="home", methods="GET")
+     * @Route("/", name="album", methods="GET")
      */
     public function indexAction()
     {
