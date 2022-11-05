@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 use App\Entity\Album;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -13,11 +10,10 @@ use Doctrine\Persistence\ManagerRegistry;
  * Controleur Album
  * @Route("/album")
  */
-
 class AlbumController extends AbstractController
 {
     /**
-     * @Route("/", name="home", methods="GET")
+     * @Route("/", name="album", methods="GET")
      */
     public function indexAction()
     {
@@ -25,9 +21,6 @@ class AlbumController extends AbstractController
             [ 'welcome' => "Bienvenue dans les albums" ]
         );
     }
-
-
-
     /**
  * Lists all album entities.
  *
@@ -37,16 +30,12 @@ public function listAction(ManagerRegistry $doctrine): Response
 {
     $entityManager= $doctrine->getManager();
     $albums = $entityManager->getRepository(Album::class)->findAll();
-
     dump($albums);
-
     return $this->render('album/index.html.twig',
         [ 'albums' => $albums ]
         );
 }
     
-
-
 /**
  * Finds and displays a album entity.
  *

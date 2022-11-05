@@ -6,6 +6,7 @@ use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AlbumRepository;
 
 /**
  * @ORM\Entity(repositoryClass=MemberRepository::class)

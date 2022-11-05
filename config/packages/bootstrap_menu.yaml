@@ -1,0 +1,17 @@
+bootstrap_menu:
+  menus:
+    main:
+      items:
+        albums:
+          label: 'Albums'
+          route: 'albums_list'
+
+        membres:
+          label: 'Membres'
+          route: 'members_list'
+
+        souvenirs:
+          label: 'Souvenirs'
+          route: 'souvenirs_list'
+
+
