@@ -2,12 +2,12 @@
 
 {% block title %}Members{% endblock %}
 
-  {% block body %}
+  {% block main %}
       <h1>Membre</h1>
 
          {% dump member %}
 
-      <table class="table">
+      <table class="table table-dark">
           <tbody>
               <tr>
                   <th>Id</th>
@@ -16,12 +16,17 @@
               <tr>
                   <th>Membre</th>
                   <td>{{ member.name }}</td>
-              </tr>           
-
+              </tr>
+              <tr>
+                   <th>Albums</th>
+                    {% for alb in member.album %}
+                        <td>{{ alb }}</td>
+                    {% endfor %} {# albums #}
+              </tr>             
 
           </tbody>
       </table>
 
       <a href="{{ path('members_list') }}">back to list</a>
 
-  {% endblock %} 
+  {% endblock %} {# main #}

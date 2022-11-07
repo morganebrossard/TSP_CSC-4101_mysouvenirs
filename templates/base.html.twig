@@ -40,6 +40,32 @@
         <script src="{{ asset('js/scripts.js','startbootstrap') }}"></script>
     {% endblock %} {# javascripts #}
 
+    
+    <div class="container body-container">
+    <main>
+
+      {% block main %}
+      <div class="row">
+        <div class="col-md-12">
+          <p>
+            <i>MAIN</i>
+          </p>
+        </div>
+      </div>
+      {% endblock %} {# main #}
+
+    </main>
+
+    </div> <!-- /.body-container -->
+
+
+    {% block footer %}
+        <footer class="text-center text-lg-start bg-light text-muted">
+            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+                 FOOTER
+            </div>
+         </footer>
+    {% endblock %}{# footer #}
 
     {% endblock %} {# body #}
 

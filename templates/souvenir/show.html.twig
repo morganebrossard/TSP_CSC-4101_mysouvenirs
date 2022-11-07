@@ -2,31 +2,30 @@
 
 {% block title %}Souvenirs{% endblock %}
 
-  {% block body %}
+  {% block main %}
       <h1>Souvenir</h1>
 
          {% dump souvenir %}
 
-      <table class="table">
+     <table class="table table-dark">
           <tbody>
               <tr>
                   <th>Id</th>
                   <td>{{ souvenir.id }}</td>
               </tr>
               <tr>
-                  <th>Title</th>
+                  <th>Titre</th>
                   <td>{{ souvenir.title }}</td>
-              </tr>      
-              <tr>
+              </tr>     
+                <tr>
                   <th>Date</th>
                   <td>{{ souvenir.date ? souvenir.date|date('Y-m-d H:i:s') : '' }}</td>
               </tr>
-              <tr>
+                <tr>
                   <th>Album</th>
                   <td>{{ souvenir.album }}</td>
-              </tr>           
-                         
-                   
+              </tr>
+                      
 
 
           </tbody>
@@ -34,4 +33,4 @@
 
       <a href="{{ path('souvenirs_list') }}">back to list</a>
 
-  {% endblock %}
+ {% endblock %} {# main #}

@@ -2,12 +2,12 @@
 
 {% block title %}Albums{% endblock %}
 
-  {% block body %}
+  {% block main %}
       <h1>Album</h1>
 
          {% dump album %}
 
-      <table class="table">
+      <table class="table table-dark">
           <tbody>
               <tr>
                   <th>Id</th>
@@ -16,7 +16,14 @@
               <tr>
                   <th>Album</th>
                   <td>{{ album.name }}</td>
-              </tr>           
+              </tr>    
+
+              <tr>
+                   <th>Souvenirs</th>
+                    {% for souv in album.souvenir %}
+                        <td>{{ souv }}</td>
+                    {% endfor %} {# souvenirs #}
+              </tr>  
 
 
           </tbody>
@@ -24,4 +31,4 @@
 
       <a href="{{ path('albums_list') }}">back to list</a>
 
-  {% endblock %}
+  {% endblock %} {# main #}
