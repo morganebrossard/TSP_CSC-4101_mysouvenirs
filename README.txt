@@ -11,3 +11,5 @@ Etapes suivies :
 - Ajout de l'entité Member et adaptation de la bdd de test
 - Pages HTML affichage albums
 - Gabarits Twig sur cette page
+- Ajout de les pages Membres et souvenirs (listes et affichage)
+- Ajout d'un bundle BootStrap pour les styles
