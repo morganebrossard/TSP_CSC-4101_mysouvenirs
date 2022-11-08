@@ -3,29 +3,26 @@
 {% block title %}Albums{% endblock %}
 
   {% block main %}
-      <h1>Bienvenue dans : {{ album.name }} (id {{ album.id }} ) </h1> 
+      <h1>Bienvenue dans : {{ album.name }} </h1> 
 
          {% dump album %}
 
 
-      <table class="table table-dark">
-          <tbody>
-              <tr>
-                  <th>Id</th>
-                  <td>{{ album.id }}</td>
-              </tr>
-              <tr>
-                  <th>Album</th>
-                  <td>{{ album.name }}</td>
-              </tr>    
+      <table class="table table-light">
+      <thead>
+        <tr>
+            <th>Souvenirs</th>
+            <th> &nbsp;</th>
 
-              <tr>
-                   <th>Souvenirs</th>
-                    {% for souv in album.souvenir %}
-                        <td>{{ souv }}</td>
-                    {% endfor %} {# souvenirs #}
-              </tr>  
-
+        </tr>
+    </thead>
+    <tbody>    
+                   
+         {% for souv in album.souvenir %}
+         <tr>
+                <td>{{ souv }} <a class="btn btn-outline-dark btn-sm " href="{{ path('souvenir_show', {'id': souv.id}) }}">Voir ce souvenir</a></td>
+         </tr>
+         {% endfor %} {# souvenirs #}
 
           </tbody>
       </table>
