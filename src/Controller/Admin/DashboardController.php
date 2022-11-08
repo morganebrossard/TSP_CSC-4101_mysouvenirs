@@ -11,6 +11,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use App\Entity\Album;
 use App\Entity\Souvenir;
 use App\Entity\Member;
+use App\Entity\Tableau;
+
 
 
 class DashboardController extends AbstractDashboardController
@@ -43,5 +45,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Les albums', 'fas fa-list', Album::class);
         yield MenuItem::linkToCrud('Les souvenirs', 'fas fa-list', Souvenir::class);
         yield MenuItem::linkToCrud('Les membres', 'fas fa-list', Member::class);
+        yield MenuItem::linkToCrud('Les tableaux', 'fas fa-list', Tableau::class);
     }
 }

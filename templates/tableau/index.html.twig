@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau index{% endblock %}
+
+{% block main %}
+    <h1>Tableau index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Publie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tableau in tableaus %}
+            <tr>
+                <td>{{ tableau.id }}</td>
+                <td>{{ tableau.description }}</td>
+                <td>{{ tableau.publie ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_tableau_show', {'id': tableau.id}) }}">show</a>
+                    <a href="{{ path('app_tableau_edit', {'id': tableau.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tableau_new') }}">Create new</a>
+
+{% endblock %}

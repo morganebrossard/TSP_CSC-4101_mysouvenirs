@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SouvenirRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,17 @@ class Souvenir
      * @ORM\ManyToOne(targetEntity=Album::class, inversedBy="souvenir")
      */
     private $album;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tableau::class, mappedBy="souvenir")
+     */
+    private $tableaux;
+
+    public function __construct()
+    {
+        $this->tableaux = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -128,4 +141,32 @@ class Souvenir
     public function __toString() {
         return $this->title;
     }
+
+    /**
+     * @return Collection<int, Tableau>
+     */
+    public function getTableaux(): Collection
+    {
+        return $this->tableaux;
+    }
+
+    public function addTableaux(Tableau $tableaux): self
+    {
+        if (!$this->tableaux->contains($tableaux)) {
+            $this->tableaux[] = $tableaux;
+            $tableaux->addSouvenir($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTableaux(Tableau $tableaux): self
+    {
+        if ($this->tableaux->removeElement($tableaux)) {
+            $tableaux->removeSouvenir($this);
+        }
+
+        return $this;
+    }
+
 }

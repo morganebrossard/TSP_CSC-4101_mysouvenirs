@@ -35,9 +35,16 @@ class Member
      */
     private $album;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tableau::class, mappedBy="createur")
+     */
+    private $tableaux;
+
+
     public function __construct()
     {
         $this->album = new ArrayCollection();
+        $this->tableaux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +108,36 @@ class Member
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Tableau>
+     */
+    public function getTableaux(): Collection
+    {
+        return $this->tableaux;
+    }
+
+    public function addTableaux(Tableau $tableaux): self
+    {
+        if (!$this->tableaux->contains($tableaux)) {
+            $this->tableaux[] = $tableaux;
+            $tableaux->setCreateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTableaux(Tableau $tableaux): self
+    {
+        if ($this->tableaux->removeElement($tableaux)) {
+            // set the owning side to null (unless already changed)
+            if ($tableaux->getCreateur() === $this) {
+                $tableaux->setCreateur(null);
+            }
+        }
+
+        return $this;
     }
 
 }
