@@ -35,11 +35,6 @@ class Souvenir
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $type;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $context;
 
     /**
@@ -93,17 +88,6 @@ class Souvenir
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getContext(): ?string
     {

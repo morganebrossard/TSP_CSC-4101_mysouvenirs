@@ -1,26 +1,44 @@
 {% extends 'base.html.twig' %}
-{% block title %}Welcome!{% endblock %}
+{% block title %}Liste des albums{% endblock %}
+
 {% block main %}
 <h1>Liste des albums</h1>
-<table class="table table-dark">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Album</th>
-            <th>Member</th>
-            <th> &nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-         {% for album in albums %}
-            <tr>
-                <td>{{album.id}}</td>
-                <td>{{album.name}}</td> 
-                <td>{{album.member}}</td>  
-                <td><a href="{{ path('album_show', {'id': album.id}) }}">show</a></td>
 
-            </tr>  
-         {% endfor %} {# albums #}
-    </tbody>
-</table>
+
+
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            {% for album in albums %}
+                                <!-- Couv de l'album-->
+                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <!-- Infos sur l'album-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">{{ album.name }}</h5>
+                                        <!-- Propriétaire-->
+                                        {{ album.member }}
+                                    </div>
+                                </div>
+                                <!-- Voir l'inventaire-->
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ path('album_show', {'id': album.id}) }}">Voir l'album</a></div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                    {% endfor %} {#albums#}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
 {% endblock %} {# main #} 
