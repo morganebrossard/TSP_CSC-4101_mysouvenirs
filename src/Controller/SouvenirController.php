@@ -25,6 +25,14 @@ class SouvenirController extends AbstractController
         return $this->render('home.html.twig');
     }
 
+        /**
+     * @Route("/apropos", name="apropos", methods="GET")
+     */
+    public function aproposAction()
+    {
+        return $this->render('apropos.html.twig');
+    }
+
 
     /**
      * @Route("/", name="souvenir", methods="GET")

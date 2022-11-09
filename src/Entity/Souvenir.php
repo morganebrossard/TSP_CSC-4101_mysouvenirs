@@ -37,11 +37,6 @@ class Souvenir
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $context;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $description;
 
     /**
@@ -54,9 +49,15 @@ class Souvenir
      */
     private $tableaux;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Context::class, inversedBy="souvenirs")
+     */
+    private $contexts;
+
     public function __construct()
     {
         $this->tableaux = new ArrayCollection();
+        $this->contexts = new ArrayCollection();
     }
 
 
@@ -165,6 +166,30 @@ class Souvenir
         if ($this->tableaux->removeElement($tableaux)) {
             $tableaux->removeSouvenir($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Context>
+     */
+    public function getContexts(): Collection
+    {
+        return $this->contexts;
+    }
+
+    public function addContext(Context $context): self
+    {
+        if (!$this->contexts->contains($context)) {
+            $this->contexts[] = $context;
+        }
+
+        return $this;
+    }
+
+    public function removeContext(Context $context): self
+    {
+        $this->contexts->removeElement($context);
 
         return $this;
     }
