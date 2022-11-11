@@ -20,13 +20,21 @@
                    
          {% for souv in album.souvenir %}
          <tr>
-                <td>{{ souv }} <a class="btn btn-outline-dark btn-sm " href="{{ path('souvenir_show', {'id': souv.id}) }}">Voir ce souvenir</a></td>
+                <td>{{ souv }}</td>
+                <td> <a class="btn btn-outline-dark btn-sm " href="{{ path('app_souvenir_show', {'id': souv.id}) }}">Voir ce souvenir</a></td>
          </tr>
          {% endfor %} {# souvenirs #}
 
           </tbody>
       </table>
 
-      <a href="{{ path('albums_list') }}">back to list</a>
+      <a href="{{ path('app_album_index') }}">back to list</a>
+
+      <a href="{{ path('app_album_edit', {'id': album.id}) }}">edit</a>
+
+      {{ include('album/_delete_form.html.twig') }}
+
 
   {% endblock %} {# main #}
+
+

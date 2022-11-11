@@ -19,7 +19,9 @@
                    
          {% for alb in member.album %}
          <tr>
-                <td>{{ alb }} <a class="btn btn-outline-dark btn-sm " href="{{ path('album_show', {'id': alb.id}) }}">Voir cet album</a></td>
+                <td>{{ alb }}</td>
+                <td> <a class="btn btn-outline-dark btn-sm " href="{{ path('app_album_show', {'id': alb.id}) }}">Voir cet album</a></td>
+         
          </tr>
          {% endfor %} {# albums #}
 
@@ -27,6 +29,15 @@
       </table>
 
 
-      <a href="{{ path('members_list') }}">back to list</a>
+      <a href="{{ path('app_member_index') }}">back to list</a>
+
+    <a href="{{ path('app_member_edit', {'id': member.id}) }}">edit</a>
+
+    {{ include('member/_delete_form.html.twig') }}
+    
 
   {% endblock %} {# main #}
+
+
+
+

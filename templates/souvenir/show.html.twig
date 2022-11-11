@@ -29,6 +29,13 @@
           </tbody>
       </table>
 
-      <a href="{{ path('souvenirs_list') }}">back to list</a>
+      <a href="{{ path('app_souvenir_index') }}">back to list</a>
+
+        <a href="{{ path('app_souvenir_edit', {'id': souvenir.id}) }}">edit</a>
+
+    {{ include('souvenir/_delete_form.html.twig') }}
 
  {% endblock %} {# main #}
+
+
+

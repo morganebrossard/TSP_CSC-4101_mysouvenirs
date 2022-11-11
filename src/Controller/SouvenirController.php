@@ -2,21 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\Souvenir;
+use App\Form\SouvenirType;
+use App\Repository\SouvenirRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use App\Entity\Souvenir;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Controleur Souvenir
  * @Route("/souvenir")
  */
-
 class SouvenirController extends AbstractController
 {
 
+    
     /**
      * @Route("/home", name="home", methods="GET")
      */
@@ -25,7 +26,7 @@ class SouvenirController extends AbstractController
         return $this->render('home.html.twig');
     }
 
-        /**
+            /**
      * @Route("/apropos", name="apropos", methods="GET")
      */
     public function aproposAction()
@@ -33,47 +34,77 @@ class SouvenirController extends AbstractController
         return $this->render('apropos.html.twig');
     }
 
-
+    
     /**
-     * @Route("/", name="souvenir", methods="GET")
+     * @Route("/", name="app_souvenir_index", methods={"GET"})
      */
-    public function indexAction()
+    public function index(SouvenirRepository $souvenirRepository): Response
     {
-        return $this->render('index.html.twig',
-            [ 'welcome' => "Bienvenue dans les souvenirs" ]
-        );
+        return $this->render('souvenir/index.html.twig', [
+            'souvenirs' => $souvenirRepository->findAll(),
+        ]);
     }
 
+    /**
+     * @Route("/new", name="app_souvenir_new", methods={"GET", "POST"})
+     */
+    public function new(Request $request, SouvenirRepository $souvenirRepository): Response
+    {
+        $souvenir = new Souvenir();
+        $form = $this->createForm(SouvenirType::class, $souvenir);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $souvenirRepository->add($souvenir, true);
+
+            return $this->redirectToRoute('app_souvenir_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('souvenir/new.html.twig', [
+            'souvenir' => $souvenir,
+            'form' => $form,
+        ]);
+    }
 
     /**
- * Lists all souvenir entities.
- *
- * @Route("/list", name = "souvenirs_list", methods="GET")
- */
-public function listAction(ManagerRegistry $doctrine): Response
-{
-    $entityManager= $doctrine->getManager();
-    $souvenirs = $entityManager->getRepository(Souvenir::class)->findAll();
+     * @Route("/{id}", name="app_souvenir_show", methods={"GET"})
+     */
+    public function show(Souvenir $souvenir): Response
+    {
+        return $this->render('souvenir/show.html.twig', [
+            'souvenir' => $souvenir,
+        ]);
+    }
 
-    dump($souvenirs);
+    /**
+     * @Route("/{id}/edit", name="app_souvenir_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, Souvenir $souvenir, SouvenirRepository $souvenirRepository): Response
+    {
+        $form = $this->createForm(SouvenirType::class, $souvenir);
+        $form->handleRequest($request);
 
-    return $this->render('souvenir/index.html.twig',
-        [ 'souvenirs' => $souvenirs ]
-        );
-}
+        if ($form->isSubmitted() && $form->isValid()) {
+            $souvenirRepository->add($souvenir, true);
 
+            return $this->redirectToRoute('app_souvenir_index', [], Response::HTTP_SEE_OTHER);
+        }
 
+        return $this->renderForm('souvenir/edit.html.twig', [
+            'souvenir' => $souvenir,
+            'form' => $form,
+        ]);
+    }
 
-/**
- * Finds and displays a souvenir entity.
- *
- * @Route("/{id}", name="souvenir_show", requirements={ "id": "\d+"}, methods="GET")
- */
-public function showAction(Souvenir $souvenir): Response
-{
-    return $this->render('souvenir/show.html.twig',
-    [ 'souvenir' => $souvenir ]
-    );
-}
+    /**
+     * @Route("/{id}", name="app_souvenir_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Souvenir $souvenir, SouvenirRepository $souvenirRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$souvenir->getId(), $request->request->get('_token'))) {
+            $souvenirRepository->remove($souvenir, true);
+        }
+
+        return $this->redirectToRoute('app_souvenir_index', [], Response::HTTP_SEE_OTHER);
+    }
 }

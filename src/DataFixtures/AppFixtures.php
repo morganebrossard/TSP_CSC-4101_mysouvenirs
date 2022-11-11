@@ -36,6 +36,17 @@ class AppFixtures extends Fixture
         yield ["Souvenirs de Arthur","Arthur"];
     }
 
+
+    /**
+     * Generates initialization data for contexts : [label,description,subcontexts,parent]
+     * @return \\Generator
+     */
+    private static function contextDataGenerator()
+    {
+        yield ["Evènements",["Vie étudiante","Voyages"],""];
+        yield ["Vie quotidienne",""];
+    }
+
     /**
      * Generates initialization data for souvenirs : [album, title, date]
      * @return \\Generator

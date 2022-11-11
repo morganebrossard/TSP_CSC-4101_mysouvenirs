@@ -6,11 +6,14 @@ use App\Entity\Tableau;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+
+use Doctrine\ORM\QueryBuilder;
 
 
 class TableauCrudController extends AbstractCrudController
@@ -47,16 +50,24 @@ class TableauCrudController extends AbstractCrudController
             function (QueryBuilder $queryBuilder) {
             // récupération de l'instance courante de [galerie]
             $currentTableau = $this->getContext()->getEntity()->getInstance();
-            $createur = $currentTableau->getTableau();
+            $createur = $currentTableau->getcreateur();
             $memberId = $createur->getId();
             // charge les seuls souvenirs dont le 'owner' de l'album est le créateur de la galerie
             $queryBuilder->leftJoin('entity.album', 'i')
-                ->leftJoin('i.owner', 'm')
+                ->leftJoin('i.member', 'm')
                 ->andWhere('m.id = :member_id')
                 ->setParameter('member_id', $memberId);    
             return $queryBuilder;
             }
            ),
     ];
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+
+    return $actions
+        ->add(Crud::PAGE_INDEX, Action::DETAIL)
+    ;
     }
 }

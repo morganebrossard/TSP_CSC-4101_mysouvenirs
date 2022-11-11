@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Souvenir{% endblock %}
+
+{% block body %}
+    <h1>Edit Souvenir</h1>
+
+    {{ include('souvenir/_form.html.twig', {'button_label': 'Sauvegarder le changement'}) }}
+
+    <a href="{{ path('app_souvenir_index') }}">back to list</a>
+
+    {{ include('souvenir/_delete_form.html.twig') }}
+{% endblock %}
