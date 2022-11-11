@@ -2,10 +2,10 @@
 
 {% block title %}New Souvenir{% endblock %}
 
-{% block body %}
+{% block main %}
     <h1>Create new Souvenir</h1>
 
     {{ include('souvenir/_form.html.twig') }}
 
-    <a href="{{ path('app_souvenir_index') }}">back to list</a>
+    <a href="{{ path('app_souvenir_index') }}">Retour à la liste</a>
 {% endblock %}

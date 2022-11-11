@@ -103,18 +103,6 @@ class Souvenir
     }
 
 
-    public function getContext(): ?string
-    {
-        return $this->context;
-    }
-
-    public function setContext(string $context): self
-    {
-        $this->context = $context;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
