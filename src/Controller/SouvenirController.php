@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Souvenir;
 use App\Form\SouvenirType;
+use App\Entity\Album;
 use App\Repository\SouvenirRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,11 +47,12 @@ class SouvenirController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_souvenir_new", methods={"GET", "POST"})
+     * @Route("/new/{id}", name="app_souvenir_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SouvenirRepository $souvenirRepository): Response
+    public function new(Request $request, SouvenirRepository $souvenirRepository, Album $album): Response
     {
         $souvenir = new Souvenir();
+        $souvenir->setAlbum($album);
         $form = $this->createForm(SouvenirType::class, $souvenir);
         $form->handleRequest($request);
 

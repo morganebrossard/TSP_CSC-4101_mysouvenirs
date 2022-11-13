@@ -16,7 +16,9 @@ class SouvenirType extends AbstractType
             ->add('date')
             ->add('place')
             ->add('description')
-            ->add('album')
+            ->add('album', null, [
+                'disabled'   => true,
+            ])
             ->add('tableaux')
             ->add('contexts')
         ;

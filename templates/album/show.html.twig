@@ -28,6 +28,8 @@
           </tbody>
       </table>
 
+      <a href="{{ path('app_souvenir_new', {'id': album.id}) }}" class = "btn btn-secondary" role="button">Ajouter un nouveau souvenir</a>
+
       <a href="{{ path('app_album_index') }}">Retour à la liste</a>
 
       <a href="{{ path('app_album_edit', {'id': album.id}) }}">Editer</a>

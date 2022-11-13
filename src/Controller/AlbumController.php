@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Album;
 use App\Form\AlbumType;
+use App\Entity\Member;
 use App\Repository\AlbumRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,11 +28,12 @@ class AlbumController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_album_new", methods={"GET", "POST"})
+     * @Route("/new/{id}", name="app_album_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, AlbumRepository $albumRepository): Response
+    public function new(Request $request, AlbumRepository $albumRepository, Member $member): Response
     {
         $album = new Album();
+        $album->setMember($member);
         $form = $this->createForm(AlbumType::class, $album);
         $form->handleRequest($request);
 

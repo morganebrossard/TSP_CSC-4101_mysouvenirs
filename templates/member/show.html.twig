@@ -29,7 +29,9 @@
       </table>
 
 
-      <a href="{{ path('app_member_index') }}">Retour à la liste</a>
+    <a href="{{ path('app_album_new', {'id': member.id}) }}">Ajouter un nouvel album</a>
+    
+    <a href="{{ path('app_member_index') }}">Retour à la liste</a>
 
     <a href="{{ path('app_member_edit', {'id': member.id}) }}">Editer</a>
 

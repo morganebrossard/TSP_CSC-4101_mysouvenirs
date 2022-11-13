@@ -66,6 +66,14 @@ class TableauController extends AbstractController
      */
     public function souvenir_show(Tableau $tableau, Souvenir $souv): Response
     {
+        if(! $tableau->getSouvenir()->contains($souv)) {
+            throw $this->createNotFoundException("Couldn't find such a souvenir in this tableau!");
+        }
+    
+        if(! $tableau->isPublie()) {
+            throw $this->createAccessDeniedException("You cannot access the requested ressource!");
+        }
+
         return $this->render('tableau/souvenir_show.html.twig', [
             'tableau' => $tableau, 'souv' => $souv
         ]);
