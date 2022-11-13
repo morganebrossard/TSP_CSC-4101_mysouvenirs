@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Souvenirs{% endblock %}
+
+  {% block main %}
+      <h1>" {{ souv.title }} "</h1>
+
+     <table class="table table-light">
+          <tbody>
+              <tr>
+                  <th>Id</th>
+                  <td>{{ souv.id }}</td>
+              </tr>
+              <tr>
+                  <th>Titre</th>
+                  <td>{{ souv.title }}</td>
+              </tr>     
+                <tr>
+                  <th>Date</th>
+                  <td>{{ souv.date ? souv.date|date('Y-m-d H:i:s') : '' }}</td>
+              </tr>
+                <tr>
+                  <th>Album</th>
+                  <td>{{ souv.album }}</td>
+              </tr>
+
+              <tr>
+                <th>Contextes</th>
+                <td> {{ souv.contexts|join(', ') }} </td>
+              </tr>
+
+
+          </tbody>
+      </table>
+
+      <a href="{{ path('app_tableau_show', { 'id': tableau.id}) }}">Retour au tableau</a>
+
+ {% endblock %} {# main #}

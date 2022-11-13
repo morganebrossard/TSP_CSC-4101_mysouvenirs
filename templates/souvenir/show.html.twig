@@ -24,12 +24,11 @@
                   <td>{{ souvenir.album }}</td>
               </tr>
 
-                {% for context in souvenir.contexts %}
-                <tr>
-                <th>Contexte</th>
-                <td>{{ context }}</td>
-                </tr>
-                {% endfor %}
+                <th>Contextes</th>
+                {#<td>{% for context in souvenir.contexts %} #}
+                {#{{ context }} #}
+                {#{% endfor %} </td>#}
+                <td> {{ souvenir.contexts|join(', ') }} </td>
                       
 
 

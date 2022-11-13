@@ -60,10 +60,10 @@ class AppFixtures extends Fixture
     {
         yield ["Souvenirs de Arthur","Je me mets au vélo !", date_create("2017-04-21"),["Perso"]];
         yield ["Souvenirs de Louise","Je me mets à la peinture !", date_create("2016-09-30"),["Perso"]];
-        yield ["Souvenirs de Morgane", "Je me mets au surf au Brésil !", date_create("2015-09-29"),["Voyages"]];
+        yield ["Souvenirs de Morgane", "Je me mets au surf au Brésil !", date_create("2015-09-29"),["Voyages","Perso"]];
         yield ["Souvenirs de Morgane","Un tour à la crêperie en famille", date_create("2021-12-26"),["En famille"]];
         yield ["Souvenirs de Morgane","Pancakes et film dans mon canapé", date_create("2018-06-04"),["Perso"]];
-        yield ["Souvenirs de Morgane","Résultats du bac !!!", date_create("2018-07-10"),["Vie étudiante"]];
+        yield ["Souvenirs de Morgane","Résultats du bac !!!", date_create("2018-07-10"),["Vie étudiante","Perso"]];
     }
 
 
@@ -109,10 +109,18 @@ class AppFixtures extends Fixture
         foreach (self::souvenirsDataGenerator() as [$album, $title, $date, $contexts])
         {
             $alb = $albumRepo->findOneBy(['name' => $album]);
+            #$contexts_list = $contextRepo->findBy(['label' => $contexts]);
             $contexts_list = $contextRepo->findOneBy(['label' => $contexts]);
             $souv = new Souvenir();
             $souv->setAlbum($alb);
-            $souv->addContext($contexts_list);
+            $souv->AddContext($contexts_list);
+
+            #foreach ($context as $contexts_list) {
+            #    $souv->addContext($context); }
+            #
+            #dump ($souv->getContexts());
+
+
             $souv->setTitle($title);
             $souv->setDate($date);
             $alb->addSouvenir($souv);

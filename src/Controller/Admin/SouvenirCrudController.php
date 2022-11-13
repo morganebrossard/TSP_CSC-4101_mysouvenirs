@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 
 class SouvenirCrudController extends AbstractCrudController
@@ -26,9 +27,14 @@ class SouvenirCrudController extends AbstractCrudController
             // Id shouldn't be modified
             IdField::new('id')->hideOnForm(),
             TextField::new('title'),
-                //->setTemplatePath('admin/fields/todo_index_title.html.twig'), TODO
+                //->setTemplatePath('admin/fields/souvenir_index_title.html.twig'), souvenir
             DateField::new('Date'),
             TextField::new('album'),
+            AssociationField::new('contexts') // remplacer par le nom de l'attribut spécifique, par exemple 'context'
+        ->onlyOnDetail()
+        ->formatValue(function ($value, $entity) {
+            return implode(', ', $entity->getContexts()->toArray()); // ici Contexts()
+        })
         ];
     }
 
