@@ -19,6 +19,12 @@
                   <th>Date</th>
                   <td>{{ souvenir.date ? souvenir.date|date('Y-m-d H:i:s') : '' }}</td>
               </tr>
+
+              <tr>
+                <th>Photo</th>
+                <td><img src="{{ vich_uploader_asset(souvenir, 'imageFile') }}" width="300"/></td>
+            </tr>
+
                 <tr>
                   <th>Album</th>
                   <td>{{ souvenir.album }}</td>

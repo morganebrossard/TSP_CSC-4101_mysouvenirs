@@ -13,7 +13,7 @@
                         <div class="card h-100">
                             {% for souvenir in souvenirs %}
                                 <!-- Photo du souvenir-->
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                <img class="card-img-top" src="{{ vich_uploader_asset(souvenir, 'imageFile') }}" />
                                 <!-- Infos sur le souvenir-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
