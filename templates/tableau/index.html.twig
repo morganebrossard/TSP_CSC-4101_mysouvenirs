@@ -21,9 +21,8 @@
                 <td>{{ tableau.description }}</td>
                 <td>{{ tableau.publie ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_tableau_show', {'id': tableau.id}) }}">show</a>
-                    <a href="{{ path('app_tableau_edit', {'id': tableau.id}) }}">edit</a>
-                </td>
+                    <a class="btn btn-outline-dark btn-sm " href="{{ path('app_tableau_show', {'id': tableau.id}) }}">Voir ce tableau</a>
+                 </td>
             </tr>
         {% else %}
             <tr>
@@ -33,7 +32,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_tableau_new') }}" class = "btn btn-secondary" role="button">Nouveau tableau</a>
+    <a href="{{ path('app_tableau_new') }}" class = "btn btn-success" role="button">Nouveau tableau</a>
 
 
 {% endblock %}

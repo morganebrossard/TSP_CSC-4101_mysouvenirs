@@ -5,7 +5,12 @@
 {% block main %}
     <h1>Create new Souvenir</h1>
 
-    {{ include('souvenir/_form.html.twig') }}
+    <table class="table">
 
-    <a href="{{ path('app_souvenir_index') }}">Retour à la liste</a>
+        {{ include('souvenir/_form.html.twig') }}
+        &nbsp
+        <a href="{{ path('app_souvenir_index') }}" class = "btn btn-dark btn-sm" role="button">Retour à la liste</a>
+    
+        </table>
+        
 {% endblock %}

@@ -37,15 +37,18 @@
                 <td> {{ souvenir.contexts|join(', ') }} </td>
                       
 
-
           </tbody>
       </table>
 
-      <a href="{{ path('app_souvenir_index') }}">Retour à la liste</a>
+      <table class="table">
+        <a href="{{ path('app_souvenir_edit', {'id': souvenir.id}) }}" class = "btn btn-secondary btn-sm" role="button">Editer ce souvenir</a>
+    
+        <table class="table">
+        <a href="{{ path('app_souvenir_index') }}" class = "btn btn-dark btn-sm" role="button">Retour à la liste</a>
+        &nbsp
+        {{ include('souvenir/_delete_form.html.twig') }}
+        </table>
 
-        <a href="{{ path('app_souvenir_edit', {'id': souvenir.id}) }}">Editer</a>
-
-    {{ include('souvenir/_delete_form.html.twig') }}
 
  {% endblock %} {# main #}
 

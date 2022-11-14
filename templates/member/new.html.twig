@@ -5,7 +5,12 @@
 {% block main %}
     <h1>Create new Member</h1>
 
-    {{ include('member/_form.html.twig') }}
+    <table class="table">
 
-    <a href="{{ path('app_member_index') }}">Retour à la liste</a>
+    {{ include('member/_form.html.twig') }}
+    &nbsp
+    <a href="{{ path('app_member_index') }}" class = "btn btn-dark btn-sm" role="button">Retour à la liste</a>
+
+    </table>
+    
 {% endblock %}

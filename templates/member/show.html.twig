@@ -29,13 +29,17 @@
       </table>
 
 
-    <a href="{{ path('app_album_new', {'id': member.id}) }}">Ajouter un nouvel album</a>
-    
-    <a href="{{ path('app_member_index') }}">Retour à la liste</a>
+      <table class="table">
+    <a href="{{ path('app_member_edit', {'id': member.id}) }}" class = "btn btn-secondary btn-sm" role="button">Editer ce membre</a>
+    &nbsp
+    <a href="{{ path('app_album_new', {'id': member.id}) }}" class = "btn btn-success btn-sm" role="button">Ajouter un nouvel album</a>
+  </table>
 
-    <a href="{{ path('app_member_edit', {'id': member.id}) }}">Editer</a>
-
+    <table class="table">
+    <a href="{{ path('app_member_index') }}" class = "btn btn-dark btn-sm" role="button">Retour à la liste</a>
+    &nbsp
     {{ include('member/_delete_form.html.twig') }}
+    </table>
     
 
   {% endblock %} {# main #}

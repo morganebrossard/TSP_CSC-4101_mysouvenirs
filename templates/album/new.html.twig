@@ -5,7 +5,12 @@
 {% block main %}
     <h1>Créer un nouvel album</h1>
 
-    {{ include('album/_form.html.twig') }}
+    <table class="table">
 
-    <a href="{{ path('app_album_index') }}">Retour à la liste</a>
+        {{ include('album/_form.html.twig') }}
+        &nbsp
+        <a href="{{ path('app_album_index') }}" class = "btn btn-dark btn-sm" role="button">Retour à la liste</a>
+    
+        </table>
+        
 {% endblock %}
