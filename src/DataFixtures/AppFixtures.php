@@ -12,6 +12,7 @@ use App\Entity\Context;
 use App\Repository\ContextRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 class AppFixtures extends Fixture
@@ -40,30 +41,32 @@ class AppFixtures extends Fixture
 
 
     /**
-     * Generates initialization data for contexts : [label,description]
+     * Generates initialization data for contexts : [label,description, parent]
      * @return \\Generator
      */
     private static function contextDataGenerator()
     {
-        yield ["Vie étudiante","Souvenirs qu'on se fait dans le contexte du campus"];
-        yield ["Voyages","Souvenirs qu'on se fait en vacances/voyages"];
-        yield ["Perso","Souvenirs qu'on se fait avec soi-même au quotidien"];
-        yield ["En famille","Souvenirs qu'on se fait au quotidien en famille"];
+        yield ["Occasion", "A quelle occasion a-t-on vécu ce souvenir", null];
+        yield ["Entourage", "Avec qui s'est-on-fait ce souvenir", null];
+        yield ["Vie étudiante","Souvenir créé dans la vie étudiante", "Occasion"];
+        yield ["Voyage","Souvenir créé lors d'un voyage", "Occasion"];
+        yield ["Perso","Souvenir créé seul", "Entourage"];
+        yield ["En famille","Souvenir créé en famille", "Entourage"];
 
     }
 
     /**
-     * Generates initialization data for souvenirs : [album, title, date, contexts]
+     * Generates initialization data for souvenirs : [album, title, date, contexts,imageName]
      * @return \\Generator
      */
     private static function souvenirsDataGenerator()
     {
-        yield ["Souvenirs de Arthur","Je me mets au vélo !", date_create("2017-04-21"),["Perso"]];
-        yield ["Souvenirs de Louise","Je me mets à la peinture !", date_create("2016-09-30"),["Perso"]];
-        yield ["Souvenirs de Morgane", "Je me mets au surf au Brésil !", date_create("2015-09-29"),["Voyages","Perso"]];
-        yield ["Souvenirs de Morgane","Un tour à la crêperie en famille", date_create("2021-12-26"),["En famille"]];
-        yield ["Souvenirs de Morgane","Pancakes et film dans mon canapé", date_create("2018-06-04"),["Perso"]];
-        yield ["Souvenirs de Morgane","Résultats du bac !!!", date_create("2018-07-10"),["Vie étudiante","Perso"]];
+        yield ["Souvenirs de Arthur","Je me mets au vélo !", date_create("2017-04-21"),["Perso"],null];
+        yield ["Souvenirs de Louise","Je me mets à la peinture !", date_create("2016-09-30"),["Perso"],null];
+        yield ["Souvenirs de Morgane", "Je me mets au surf au Brésil !", date_create("2015-09-29"),["Voyage","Perso"],null];
+        yield ["Souvenirs de Morgane","Un tour à la crêperie en famille", date_create("2021-12-26"),["En famille"],null];
+        yield ["Souvenirs de Morgane","Pancakes et film dans mon canapé", date_create("2018-06-04"),["Perso"],"nourriture.png"];
+        yield ["Souvenirs de Morgane","Résultats du bac !!!", date_create("2018-07-10"),["Vie étudiante","Perso"],null];
     }
 
 
@@ -71,19 +74,23 @@ class AppFixtures extends Fixture
     {
         $albumRepo = $manager->getRepository(Album::class);
         $memberRepo = $manager->getRepository(Member::class);
-        $contextRepo = $manager->getRepository(Context::class);
-
+        $parentRepo = $manager->getRepository(Context::class);
 
         
-        foreach (self::contextDataGenerator() as [$label, $description] ) {
+        foreach (self::contextDataGenerator() as [$label, $description, $parent] ) {
 
             $context = new Context();
             $context->setLabel($label);
             $context->setDescription($description);
-            $manager->persist($context);         
+            $par = $parentRepo->FindOneBy(["label"=>$parent]);
+            $context->setParent($par);
+            $this->AddReference($label, $context);
+            $manager->persist($context);  
+            $manager->flush(); 
+            dump($context);   
         }
-        $manager->flush();
 
+        dump("Entités Contextes");
 
 
         foreach (self::membersDataGenerator() as [$name] ) {
@@ -93,6 +100,8 @@ class AppFixtures extends Fixture
             $manager->persist($member);          
         }
         $manager->flush();
+
+        dump("Entités Membres");
 
 
         foreach (self::albumsDataGenerator() as [$name,$member] ) {
@@ -105,28 +114,34 @@ class AppFixtures extends Fixture
         }
         $manager->flush();
 
+        dump("Entités Albums");
 
-        foreach (self::souvenirsDataGenerator() as [$album, $title, $date, $contexts])
+
+        foreach (self::souvenirsDataGenerator() as [$album, $title, $date, $contexts, $imageName])
         {
             $alb = $albumRepo->findOneBy(['name' => $album]);
-            #$contexts_list = $contextRepo->findBy(['label' => $contexts]);
-            $contexts_list = $contextRepo->findOneBy(['label' => $contexts]);
             $souv = new Souvenir();
             $souv->setAlbum($alb);
-            $souv->AddContext($contexts_list);
 
-            #foreach ($context as $contexts_list) {
-            #    $souv->addContext($context); }
-            #
-            #dump ($souv->getContexts());
-
+            foreach ($contexts as $cont) {
+               $souv->addContext($this->getReference($cont)); }
 
             $souv->setTitle($title);
             $souv->setDate($date);
+            $souv->setImageName($imageName);
+
+            #$src = home/mbrossard/CSC4101/projet/TSP_CSC-4101_mysouvenirs/public/images;
+            
+            #$file = new File('home/mbrossard/CSC4101/projet/TSP_CSC-4101_mysouvenirs/public/images','$imageName');
+            #$souv->setImageFile($file);
+
             $alb->addSouvenir($souv);
             // there's a cascade persist on album-souvenirs which avoids persisting down the relation
             $manager->persist($alb);
         }
         $manager->flush();
+
+        dump("Entités Souvenirs");
     }
+
 }

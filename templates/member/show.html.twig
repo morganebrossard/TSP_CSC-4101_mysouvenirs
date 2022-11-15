@@ -32,7 +32,9 @@
       <table class="table">
     <a href="{{ path('app_member_edit', {'id': member.id}) }}" class = "btn btn-secondary btn-sm" role="button">Editer ce membre</a>
     &nbsp
-    <a href="{{ path('app_album_new', {'id': member.id}) }}" class = "btn btn-success btn-sm" role="button">Ajouter un nouvel album</a>
+    <a href="{{ path('app_album_new', {'id': member.id}) }}" class = "btn btn-success btn-sm" role="button">Ajouter un nouvel album pour ce membre</a>
+    &nbsp
+    <a href="{{ path('app_tableau_new', {'id': member.id}) }}" class = "btn btn-success btn-sm" role="button">Créer un nouveau tableau pour ce membre</a>
   </table>
 
     <table class="table">

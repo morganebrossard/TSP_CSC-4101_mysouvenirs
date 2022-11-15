@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tableau;
 use App\Entity\Souvenir;
+use App\Entity\Member;
 use App\Form\TableauType;
 use App\Repository\TableauRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,16 +24,17 @@ class TableauController extends AbstractController
     public function index(TableauRepository $tableauRepository): Response
     {
         return $this->render('tableau/index.html.twig', [
-            'tableaus' => $tableauRepository->findAll(),
+            'tableaus' => $tableauRepository->findBy(['publie' => true]),
         ]);
     }
 
     /**
-     * @Route("/new", name="app_tableau_new", methods={"GET", "POST"})
+     * @Route("/new/{id}", name="app_tableau_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, TableauRepository $tableauRepository): Response
+    public function new(Request $request, TableauRepository $tableauRepository, Member $createur): Response
     {
         $tableau = new Tableau();
+        $tableau->setCreateur($createur);
         $form = $this->createForm(TableauType::class, $tableau);
         $form->handleRequest($request);
 

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/souvenir")
@@ -49,7 +50,7 @@ class SouvenirController extends AbstractController
     /**
      * @Route("/new/{id}", name="app_souvenir_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SouvenirRepository $souvenirRepository, Album $album): Response
+    public function new(Request $request, SouvenirRepository $souvenirRepository, Album $album, EntityManagerInterface $entityManager): Response
     {
         $souvenir = new Souvenir();
         $souvenir->setAlbum($album);
@@ -58,6 +59,13 @@ class SouvenirController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $souvenirRepository->add($souvenir, true);
+            $entityManager->persist($souvenir);
+            $entityManager->flush();
+   
+            // Make sure message will be displayed after redirect
+            $this->addFlash('Souvenir', 'Souvenir bien ajouté !');
+            // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
+            // or to $this->get('session')->getFlashBag()->add();
 
             return $this->redirectToRoute('app_souvenir_index', [], Response::HTTP_SEE_OTHER);
         }
