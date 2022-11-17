@@ -28,15 +28,22 @@
           </tbody>
   
           <table class="table">
-            <a href="{{ path('app_album_edit', {'id': album.id}) }}" class = "btn btn-secondary btn-sm" role="button">Editer cet album</a>
+            {% if is_granted('ROLE_USER') %}
+              <a href="{{ path('app_album_edit', {'id': album.id}) }}" class = "btn btn-secondary btn-sm" role="button">Editer cet album</a>
+            {%endif%}
             &nbsp
-            <a href="{{ path('app_souvenir_new', {'id': album.id}) }}" class = "btn btn-success btn-sm" role="button">Ajouter un nouveau souvenir</a>
+            {% if is_granted('ROLE_USER') %}
+              <a href="{{ path('app_souvenir_new', {'id': album.id}) }}" class = "btn btn-success btn-sm" role="button">Ajouter un nouveau souvenir</a>
+            {%endif%}
           </table>
         
             <table class="table">
             <a href="{{ path('app_album_index') }}" class = "btn btn-dark btn-sm" role="button">Retour à la liste</a>
             &nbsp
-            {{ include('album/_delete_form.html.twig') }}
+
+            {% if is_granted('ROLE_ADMIN') %}
+              {{ include('album/_delete_form.html.twig') }}
+            {%endif%}  
             </table>
 
 

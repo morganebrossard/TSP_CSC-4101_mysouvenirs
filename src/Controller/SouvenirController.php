@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/souvenir")
@@ -88,6 +89,7 @@ class SouvenirController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_souvenir_edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Souvenir $souvenir, SouvenirRepository $souvenirRepository): Response
     {
@@ -108,6 +110,7 @@ class SouvenirController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_souvenir_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Souvenir $souvenir, SouvenirRepository $souvenirRepository): Response
     {

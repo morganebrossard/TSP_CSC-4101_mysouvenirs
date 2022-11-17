@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/album")
@@ -61,6 +62,7 @@ class AlbumController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="app_album_edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Album $album, AlbumRepository $albumRepository): Response
     {
@@ -81,6 +83,7 @@ class AlbumController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_album_delete", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Album $album, AlbumRepository $albumRepository): Response
     {
