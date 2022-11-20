@@ -38,21 +38,17 @@ class TableauCrudController extends AbstractCrudController
 
         AssociationField::new('souvenir')
         ->onlyOnForms()
-        // on ne souhaite pas gérer l'association entre les
-        // souvenirs et le tableau dès la création du
-        // tableau
+        // on ne souhaite pas gérer l'association entre les souvenirs et le tableau dès la création du tableau
         ->hideWhenCreating()
         ->setTemplatePath('admin/fields/album_souvenirs.html.twig')
-        // Ajout possible seulement pour des souvenirs qui
-        // appartiennent au même propriétaire de l'album
-        // que le créateur du tableau
+        // Ajout possible seulement pour des souvenirs qui appartiennent au même propriétaire de l'album que le créateur du tableau
         ->setQueryBuilder(
             function (QueryBuilder $queryBuilder) {
-            // récupération de l'instance courante de [galerie]
+            // récupération de l'instance courante de tableau
             $currentTableau = $this->getContext()->getEntity()->getInstance();
             $createur = $currentTableau->getcreateur();
             $memberId = $createur->getId();
-            // charge les seuls souvenirs dont le 'owner' de l'album est le créateur de la galerie
+            // charge les seuls souvenirs dont le 'member' de l'album est le créateur de la galerie
             $queryBuilder->leftJoin('entity.album', 'i')
                 ->leftJoin('i.member', 'm')
                 ->andWhere('m.id = :member_id')

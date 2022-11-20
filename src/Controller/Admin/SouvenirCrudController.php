@@ -27,13 +27,12 @@ class SouvenirCrudController extends AbstractCrudController
             // Id shouldn't be modified
             IdField::new('id')->hideOnForm(),
             TextField::new('title'),
-                //->setTemplatePath('admin/fields/souvenir_index_title.html.twig'), souvenir
             DateField::new('Date'),
             TextField::new('album'),
-            AssociationField::new('contexts') // remplacer par le nom de l'attribut spécifique, par exemple 'context'
+            AssociationField::new('contexts')
         ->onlyOnDetail()
         ->formatValue(function ($value, $entity) {
-            return implode(', ', $entity->getContexts()->toArray()); // ici Contexts()
+            return implode(', ', $entity->getContexts()->toArray());
         })
         ];
     }

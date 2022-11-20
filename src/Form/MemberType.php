@@ -13,7 +13,6 @@ class MemberType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
         ;
     }
 

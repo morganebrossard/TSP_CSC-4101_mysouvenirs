@@ -17,7 +17,6 @@ class SouvenirType extends AbstractType
             ->add('title')
             ->add('date')
             ->add('place')
-            ->add('description')
             ->add('imageName', TextType::class,  ['disabled' => true])
             ->add('imageFile', VichImageType::class, ['required' => false])
             ->add('album', null, [

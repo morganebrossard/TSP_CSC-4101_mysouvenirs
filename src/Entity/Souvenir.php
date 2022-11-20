@@ -38,11 +38,6 @@ class Souvenir
     private $place;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $description;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Album::class, inversedBy="souvenir")
      */
     private $album;
@@ -105,18 +100,6 @@ class Souvenir
         return $this;
     }
 
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getAlbum(): ?Album
     {

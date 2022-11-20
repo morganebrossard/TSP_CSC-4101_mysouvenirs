@@ -67,10 +67,7 @@ class TableauController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $tableauRepository->add($tableau, true);
             
-            // Make sure message will be displayed after redirect
             $this->addFlash('Tableau', 'Tableau bien ajouté !');
-            // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
-            // or to $this->get('session')->getFlashBag()->add();
 
             return $this->redirectToRoute('app_tableau_index', [], Response::HTTP_SEE_OTHER);
         }

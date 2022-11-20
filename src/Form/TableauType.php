@@ -12,7 +12,6 @@ class TableauType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        //dump($options);
         $tableau = $options['data'] ?? null;
         $member = $tableau->getCreateur();
         $builder

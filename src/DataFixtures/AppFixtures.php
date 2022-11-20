@@ -27,7 +27,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * Generates initialization data for members : [name,user]
+     * Génération de données pour l'entité  member : [name,user]
      * @return \\Generator
      */
     private static function membersDataGenerator()
@@ -38,7 +38,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * Generates initialization data for albums : [name,member]
+     * Génération de données pour l'entité  album : [name,member]
      * @return \\Generator
      */
     private static function albumsDataGenerator()
@@ -50,7 +50,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
 
 
     /**
-     * Generates initialization data for contexts : [label,description, parent]
+     * Génération de données pour l'entité  context : [label,description, parent]
      * @return \\Generator
      */
     private static function contextDataGenerator()
@@ -65,7 +65,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * Generates initialization data for souvenirs : [album, title, date, contexts,imageName]
+     * Génération de données pour l'entité  souvenir : [album, title, date, contexts,imageName]
      * @return \\Generator
      */
     private static function souvenirsDataGenerator()
@@ -145,7 +145,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $souv->setImageName($imageName);
 
             $alb->addSouvenir($souv);
-            // there's a cascade persist on album-souvenirs which avoids persisting down the relation
+            // Gestion de la persistance
             $manager->persist($alb);
         }
         $manager->flush();

@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
         {% block stylesheets %}
             <!-- Core theme CSS (includes Bootstrap)-->
@@ -28,7 +27,7 @@
 
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Identification utilisateur</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Authentification</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {% if app.user %}
                                     <li><a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
@@ -45,11 +44,9 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 
                                     <li><a class="dropdown-item" href="{{ path('app_member_index') }}">Membres</a></li>
-                                {#{% if is_granted('ROLE_ADMIN') %}#}
                                     <li><a class="dropdown-item" href="{{ path('app_album_index') }}">Albums</a></li>
                                     <li><a class="dropdown-item" href="{{ path('app_souvenir_index') }}">Souvenirs</a></li>
-                                {#{%endif%}#}
-                                <li><a class="dropdown-item" href="{{ path('app_tableau_index') }}">Tableaux</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('app_tableau_index') }}">Tableaux</a></li>
                             
                             </ul>
                         </li>
@@ -94,9 +91,11 @@
         {% endfor %}
       {% endblock %} {# alerts #}
 
+
       {% block main %}
 
       {% endblock %} {# main #}
+
 
     </div> <!-- /.body-container -->
 

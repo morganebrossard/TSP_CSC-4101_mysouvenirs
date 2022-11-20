@@ -1,3 +1,5 @@
+#On a finalement décidé de ne pas utiliser le menu BootStrap, car il ne permet pas de menu déroulant (préférence visuelle)
+
 bootstrap_menu:
   menus:
     main:
