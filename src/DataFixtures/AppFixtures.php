@@ -13,7 +13,6 @@ use App\Repository\ContextRepository;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 
@@ -75,7 +74,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
         yield ["Souvenirs de Louise","Je me mets à la peinture !", date_create("2016-09-30"),["Perso"],null];
         yield ["Souvenirs de Morgane", "Je me mets au surf au Brésil !", date_create("2015-09-29"),["Voyage","Perso"],null];
         yield ["Souvenirs de Morgane","Un tour à la crêperie en famille", date_create("2021-12-26"),["En famille"],null];
-        yield ["Souvenirs de Morgane","Pancakes et film dans mon canapé", date_create("2018-06-04"),["Perso"],"nourriture.png"];
+        yield ["Souvenirs de Morgane","Pancakes et film dans mon canapé", date_create("2018-06-04"),["Perso"],null];
         yield ["Souvenirs de Morgane","Résultats du bac !!!", date_create("2018-07-10"),["Vie étudiante","Perso"],null];
     }
 
@@ -133,6 +132,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
 
         foreach (self::souvenirsDataGenerator() as [$album, $title, $date, $contexts, $imageName])
         {
+
             $alb = $albumRepo->findOneBy(['name' => $album]);
             $souv = new Souvenir();
             $souv->setAlbum($alb);
@@ -143,11 +143,6 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             $souv->setTitle($title);
             $souv->setDate($date);
             $souv->setImageName($imageName);
-
-            #$src = home/mbrossard/CSC4101/projet/TSP_CSC-4101_mysouvenirs/public/images;
-            
-            #$file = new File('home/mbrossard/CSC4101/projet/TSP_CSC-4101_mysouvenirs/public/images','$imageName');
-            #$souv->setImageFile($file);
 
             $alb->addSouvenir($souv);
             // there's a cascade persist on album-souvenirs which avoids persisting down the relation

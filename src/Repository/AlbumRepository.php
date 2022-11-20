@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Album;
+use App\Entity\Souvenir;
+use App\Repository\SouvenirRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

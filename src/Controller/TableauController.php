@@ -42,10 +42,17 @@ class TableauController extends AbstractController
      */
     public function index(TableauRepository $tableauRepository): Response
     {
-        return $this->render('tableau/index.html.twig', [
-            'tableaus' => $tableauRepository->findBy(['publie' => true]),
-        ]);
+
+        if($this->isGranted('ROLE_ADMIN')) {
+             return $this->render('tableau/index.html.twig', [
+                'tableaus' => $tableauRepository->findAll(),
+            ]); }
+
+        else { return $this->render('tableau/index.html.twig', [
+                   'tableaus' => $tableauRepository->findBy(['publie' => true])]); }
+
     }
+
 
     /**
      * @Route("/new/{id}", name="app_tableau_new", methods={"GET", "POST"})
@@ -59,6 +66,11 @@ class TableauController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $tableauRepository->add($tableau, true);
+            
+            // Make sure message will be displayed after redirect
+            $this->addFlash('Tableau', 'Tableau bien ajouté !');
+            // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
+            // or to $this->get('session')->getFlashBag()->add();
 
             return $this->redirectToRoute('app_tableau_index', [], Response::HTTP_SEE_OTHER);
         }

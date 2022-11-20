@@ -65,6 +65,16 @@ class SouvenirController extends AbstractController
      */
     public function show(Souvenir $souvenir): Response
     {
+
+        $album = $souvenir->getAlbum();
+        $bool = $this->getUser()->getMember() == $album->getMember();
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($bool);
+
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas consulter le souvenir d'un autre membre !");
+        }
+
+
         return $this->render('souvenir/show.html.twig', [
             'souvenir' => $souvenir,
         ]);
