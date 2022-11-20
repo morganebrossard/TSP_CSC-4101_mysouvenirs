@@ -1,4 +1,13 @@
-Projet CSC4101 - App Web d'échanges de souvenirs
+Projet CSC4101 - MORGANE BROSSARD
+
+Appli web d'échange de souvenirs
+
+Objet : Souvenir
+Inventaire : Album
+Gallerie : Tableau
+Membre : //
+User : // (les login, mdp sont ceux définis dans les fixtures)
+
 
 Etapes suivies : 
 
