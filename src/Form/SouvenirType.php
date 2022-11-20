@@ -18,7 +18,8 @@ class SouvenirType extends AbstractType
             ->add('date')
             ->add('place')
             ->add('imageName', TextType::class,  ['disabled' => true])
-            ->add('imageFile', VichImageType::class, ['required' => false])
+            #Possibilité d'ajouter une image lors de la création/la modification d'un souvenir, sur le site
+            ->add('imageFile', VichImageType::class, ['required' => false]) 
             ->add('album', null, [
                 'disabled'   => true,
             ])

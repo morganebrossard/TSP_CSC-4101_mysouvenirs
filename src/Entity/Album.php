@@ -99,6 +99,7 @@ class Album
         return $this;
     }
 
+    #Ajout d'une fonction ToString pour représenter un album (ici son nom)
     public function __toString() {
         return $this->name;
     }

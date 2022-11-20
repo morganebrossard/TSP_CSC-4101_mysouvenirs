@@ -37,6 +37,7 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        #On configure un menu permettant de circuler entre les entités facilement dans le back office
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Les albums', 'fas fa-list', Album::class);
         yield MenuItem::linkToCrud('Les souvenirs', 'fas fa-list', Souvenir::class);

@@ -42,6 +42,8 @@ class TableauController extends AbstractController
      */
     public function index(TableauRepository $tableauRepository): Response
     {
+        #J'ai choisi qu'un admin puisse visionner tous les tableaux, et un user classique seulement les tableaux publics 
+        #(manque de temps pour configurer totalement la restriction d'accès)
 
         if($this->isGranted('ROLE_ADMIN')) {
              return $this->render('tableau/index.html.twig', [

@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/album")
- * @IsGranted("IS_AUTHENTICATED_FULLY")
+ * @IsGranted("IS_AUTHENTICATED_FULLY") #Restriction de l'accès !
  */
 class AlbumController extends AbstractController
 {
@@ -42,7 +42,7 @@ class AlbumController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $albumRepository->add($album, true);
 
-            $this->addFlash('Album', 'Album bien ajouté !');
+            $this->addFlash('Album', 'Album bien ajouté !'); #Affichage d'un message flash qui confirme la création d'un album
 
             return $this->redirectToRoute('app_album_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -58,6 +58,7 @@ class AlbumController extends AbstractController
      */
     public function show(Album $album): Response
     {
+        #Restriction d'accès
         $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember() == $album->getMember());
         if(! $hasAccess) {
             throw $this->createAccessDeniedException("Vous ne pouvez pas consulter l'album d'un autre membre !");

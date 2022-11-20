@@ -27,6 +27,7 @@
 
           </tbody>
   
+          {# Les options d'actions sont limitées selon l'authentification : Admin, user #}
           <table class="table">
             {% if is_granted('ROLE_USER') %}
               <a href="{{ path('app_album_edit', {'id': album.id}) }}" class = "btn btn-secondary btn-sm" role="button">Editer cet album</a>

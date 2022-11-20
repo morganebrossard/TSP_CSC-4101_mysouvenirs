@@ -12,6 +12,7 @@
                     <div class="col mb-5">
                         <div class="card h-100">
                             {% for souvenir in souvenirs %}
+                            {# Bonus : On affiche une photo du souvenir s'il y en a une grâce à VichUploader #}
                                 <!-- Photo du souvenir-->
                                 <img class="card-img-top" src="{{ vich_uploader_asset(souvenir, 'imageFile') }}" />
                                 <!-- Infos sur le souvenir-->

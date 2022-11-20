@@ -19,6 +19,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 class AppFixtures extends Fixture implements DependentFixtureInterface
 {
 
+    #Lien entre users et membres
     public function getDependencies()
     {
         return [
@@ -70,11 +71,13 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
      */
     private static function souvenirsDataGenerator()
     {
+        #Les souvenirs ont des noms d'image associée nuls, on ne peut (a priori ?) gérer l'importation d'images dans les datafixtures
+        #Cependant, l'association d'image lors de la création/modification de souvenirs sur le site fonctionne !
         yield ["Souvenirs de Arthur","Je me mets au vélo !", date_create("2017-04-21"),["Perso"],null];
         yield ["Souvenirs de Louise","Je me mets à la peinture !", date_create("2016-09-30"),["Perso"],null];
         yield ["Souvenirs de Morgane", "Je me mets au surf au Brésil !", date_create("2015-09-29"),["Voyage","Perso"],null];
         yield ["Souvenirs de Morgane","Un tour à la crêperie en famille", date_create("2021-12-26"),["En famille"],null];
-        yield ["Souvenirs de Morgane","Pancakes et film dans mon canapé", date_create("2018-06-04"),["Perso"],null];
+        yield ["Souvenirs de Morgane","Pancakes dans mon canapé", date_create("2018-06-04"),["Perso"],null];
         yield ["Souvenirs de Morgane","Résultats du bac !!!", date_create("2018-07-10"),["Vie étudiante","Perso"],null];
     }
 
@@ -99,7 +102,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             dump($context);   
         }
 
-        dump("Entités Contextes");
+        dump("Entités Contextes"); #Contrôle du succès de la création des données, entité par entité
 
 
         foreach (self::membersDataGenerator() as [$name,$user] ) {

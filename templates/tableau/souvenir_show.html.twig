@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{#Page particulière d'affichage des souvenirs à partir d'un tableau #}
+
 {% block title %}Souvenirs{% endblock %}
 
   {% block main %}
@@ -20,7 +22,7 @@
                   <td>{{ souv.date ? souv.date|date('Y-m-d H:i:s') : '' }}</td>
               </tr>
 
-              {# On affiche pas l'album auquel appartient le souvenir dans le tableau #}
+              {# Rem : On affiche pas l'album auquel appartient le souvenir dans le tableau #}
               
               <tr>
                 <th>Contextes</th>
