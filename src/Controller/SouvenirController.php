@@ -16,27 +16,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/souvenir")
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
 class SouvenirController extends AbstractController
 {
-
-    
-    /**
-     * @Route("/home", name="home", methods="GET")
-     */
-    public function homeAction()
-    {
-        return $this->render('home.html.twig');
-    }
-
-            /**
-     * @Route("/apropos", name="apropos", methods="GET")
-     */
-    public function aproposAction()
-    {
-        return $this->render('apropos.html.twig');
-    }
-
     
     /**
      * @Route("/", name="app_souvenir_index", methods={"GET"})

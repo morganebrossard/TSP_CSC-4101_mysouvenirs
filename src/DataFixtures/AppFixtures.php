@@ -10,22 +10,32 @@ use App\Entity\Member;
 use App\Repository\MemberRepository;
 use App\Entity\Context;
 use App\Repository\ContextRepository;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements DependentFixtureInterface
 {
+
+    public function getDependencies()
+    {
+        return [
+            UserFixtures::class,
+        ];
+    }
+
     /**
-     * Generates initialization data for members : [name]
+     * Generates initialization data for members : [name,user]
      * @return \\Generator
      */
     private static function membersDataGenerator()
     {
-        yield ["Morgane"];
-        yield ["Louise"];
-        yield ["Arthur"];
+        yield ["Morgane","morgane@localhost"];
+        yield ["Louise","louise@localhost"];
+        yield ["Arthur","arthur@localhost"];
     }
 
     /**
@@ -93,9 +103,13 @@ class AppFixtures extends Fixture
         dump("Entités Contextes");
 
 
-        foreach (self::membersDataGenerator() as [$name] ) {
+        foreach (self::membersDataGenerator() as [$name,$user] ) {
 
             $member = new Member();
+            if ($user) {
+                $username = $manager->getRepository(User::class)->findOneByEmail($user);
+                $member->setUser($username);
+            }
             $member->setName($name);
             $manager->persist($member);          
         }

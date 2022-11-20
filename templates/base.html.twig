@@ -43,9 +43,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{{ path('app_member_index') }}">Membres</a></li>
-                                <li><a class="dropdown-item" href="{{ path('app_album_index') }}">Albums</a></li>
-                                <li><a class="dropdown-item" href="{{ path('app_souvenir_index') }}">Souvenirs</a></li>
+                                
+                                    <li><a class="dropdown-item" href="{{ path('app_member_index') }}">Membres</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a class="dropdown-item" href="{{ path('app_album_index') }}">Albums</a></li>
+                                    <li><a class="dropdown-item" href="{{ path('app_souvenir_index') }}">Souvenirs</a></li>
+                                {%endif%}
                                 <li><a class="dropdown-item" href="{{ path('app_tableau_index') }}">Tableaux</a></li>
                             
                             </ul>

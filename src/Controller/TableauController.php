@@ -19,6 +19,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class TableauController extends AbstractController
 {
+
+        /**
+     * @Route("/home", name="home", methods="GET")
+     */
+    public function homeAction()
+    {
+        return $this->render('home.html.twig');
+    }
+
+            /**
+     * @Route("/apropos", name="apropos", methods="GET")
+     */
+    public function aproposAction()
+    {
+        return $this->render('apropos.html.twig');
+    }
+
+    
     /**
      * @Route("/", name="app_tableau_index", methods={"GET"})
      */
@@ -70,11 +88,25 @@ class TableauController extends AbstractController
     public function souvenir_show(Tableau $tableau, Souvenir $souv): Response
     {
         if(! $tableau->getSouvenir()->contains($souv)) {
-            throw $this->createNotFoundException("Couldn't find such a souvenir in this tableau!");
+            throw $this->createNotFoundException("Nous n'avons pas trouvé un tel souvenir dans ce tableau !");
         }
     
-        if(! $tableau->isPublie()) {
-            throw $this->createAccessDeniedException("You cannot access the requested ressource!");
+        $hasAccess = false;
+        if($this->isGranted('ROLE_ADMIN') || $tableau->isPublie()) {
+            $hasAccess = true;
+        }
+        else {
+            $user = $this->getMember();
+              if( $user ) {
+                  $member = $user->getMember();
+                  if ( $member &&  ($member == $tableau->getCreateur()) ) {
+                      $hasAccess = true;
+                  }
+              }
+        }
+
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas accéder à la ressource !");
         }
 
         return $this->render('tableau/souvenir_show.html.twig', [
@@ -82,11 +114,18 @@ class TableauController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/{id}/edit", name="app_tableau_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Tableau $tableau, TableauRepository $tableauRepository): Response
     {
+
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember() == $tableau->getCreateur());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas éditer le tableau d'un autre membre !");
+}
+
         $form = $this->createForm(TableauType::class, $tableau);
         $form->handleRequest($request);
 
@@ -107,6 +146,11 @@ class TableauController extends AbstractController
      */
     public function delete(Request $request, Tableau $tableau, TableauRepository $tableauRepository): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember() == $member->getName());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas supprimer le tableau d'un autre membre !");
+}
+
         if ($this->isCsrfTokenValid('delete'.$tableau->getId(), $request->request->get('_token'))) {
             $tableauRepository->remove($tableau, true);
         }

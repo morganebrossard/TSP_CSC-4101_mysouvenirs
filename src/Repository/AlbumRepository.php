@@ -30,14 +30,22 @@ class AlbumRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Album $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+    public function remove(Album $entity, bool $flush = false): void
+{
+    $SouvenirRepository = $this->getEntityManager()->getRepository(Souvenir::class);
+
+    // clean the souvenirs properly
+    $souvenirs = $entity->getSouvenir();
+    foreach($souvenirs as $souvenir) {
+        $SouvenirRepository->remove($souvenir, $flush);
     }
+    $this->getEntityManager()->remove($entity);
+
+    if ($flush) {
+        $this->getEntityManager()->flush();
+    }
+}
 
 //    /**
 //     * @return Album[] Returns an array of Album objects

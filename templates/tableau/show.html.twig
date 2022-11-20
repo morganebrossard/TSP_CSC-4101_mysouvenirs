@@ -34,14 +34,18 @@
     </table>
 
     <table class="table">
-        <a href="{{ path('app_tableau_edit', {'id': tableau.id}) }}" class = "btn btn-secondary btn-sm" role="button">Editer ce tableau</a>
+        {% if is_granted('ROLE_USER') %}
+          <a href="{{ path('app_tableau_edit', {'id': tableau.id}) }}" class = "btn btn-secondary btn-sm" role="button">Editer ce tableau</a>
+       {%endif%}
         &nbsp
          </table>
     
         <table class="table">
         <a href="{{ path('app_tableau_index') }}" class = "btn btn-dark btn-sm" role="button">Retour à la liste</a>
         &nbsp
-        {{ include('tableau/_delete_form.html.twig') }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('tableau/_delete_form.html.twig') }}
+        {%endif%}
         </table>
     
 

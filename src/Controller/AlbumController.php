@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/album")
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
  */
 class AlbumController extends AbstractController
 {
@@ -55,6 +56,10 @@ class AlbumController extends AbstractController
      */
     public function show(Album $album): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember() == $album->getMember());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas consulter l'album d'un autre membre !");
+}
         return $this->render('album/show.html.twig', [
             'album' => $album,
         ]);
@@ -66,6 +71,11 @@ class AlbumController extends AbstractController
      */
     public function edit(Request $request, Album $album, AlbumRepository $albumRepository): Response
     {
+
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember() == $album->getMember());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas éditer un album qui n'est pas à vous !");
+}
         $form = $this->createForm(AlbumType::class, $album);
         $form->handleRequest($request);
 
@@ -87,6 +97,10 @@ class AlbumController extends AbstractController
      */
     public function delete(Request $request, Album $album, AlbumRepository $albumRepository): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember() == $album->getMember());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas supprimer l'album d'un autre membre !");}
+
         if ($this->isCsrfTokenValid('delete'.$album->getId(), $request->request->get('_token'))) {
             $albumRepository->remove($album, true);
         }

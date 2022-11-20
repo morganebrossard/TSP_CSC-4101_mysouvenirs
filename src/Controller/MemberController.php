@@ -31,6 +31,10 @@ class MemberController extends AbstractController
      */
     public function new(Request $request, MemberRepository $memberRepository): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas créer de membre, vous n'êtes pas admin !");
+}
         $member = new Member();
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
@@ -52,6 +56,10 @@ class MemberController extends AbstractController
      */
     public function show(Member $member): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember() == $member->getName());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas consulter le profil d'un autre membre !");
+}
         return $this->render('member/show.html.twig', [
             'member' => $member,
         ]);
@@ -62,6 +70,11 @@ class MemberController extends AbstractController
      */
     public function edit(Request $request, Member $member, MemberRepository $memberRepository): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember() == $member->getName());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas éditer le profil d'un autre membre !");}
+
+
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
 
@@ -82,6 +95,15 @@ class MemberController extends AbstractController
      */
     public function delete(Request $request, Member $member, MemberRepository $memberRepository): Response
     {
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas supprimer un autre membre !");
+}
+
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas supprimer membre !");}
+
         if ($this->isCsrfTokenValid('delete'.$member->getId(), $request->request->get('_token'))) {
             $memberRepository->remove($member, true);
         }
